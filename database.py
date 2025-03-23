@@ -1,5 +1,6 @@
 import sqlite3
 
+
 from config import DATABASE_FILE
 
 def connect_db():
@@ -236,3 +237,19 @@ def get_total_income():
     total_income = cursor.fetchone()[0]
     conn.close()
     return total_income
+
+
+def login(username, password):
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    # جستجو در پایگاه داده برای یافتن کاربر با نام کاربری وارد شده
+    cursor.execute("SELECT * FROM Users WHERE username = ?", (username,))
+    user = cursor.fetchone()
+    conn.close()
+
+    # اگر کاربر وجود داشته باشد و پسورد صحیح باشد
+    if user and user[2] == password:  # user[2] مربوط به پسورد است
+        return user  # کاربر را بر می‌گرداند
+    else:
+        return None  # اگر نام کاربری یا پسورد اشتباه باشد
