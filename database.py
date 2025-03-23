@@ -1,6 +1,6 @@
 import sqlite3
 
-from .config import DATABASE_FILE
+from config import DATABASE_FILE
 
 def connect_db():
     conn = sqlite3.connect(DATABASE_FILE)
