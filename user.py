@@ -26,6 +26,7 @@ def user_menu():
         user = login(username, password)
         if user:
             print(f"ورود موفقیت‌آمیز! خوش آمدید, {user[4]} {user[5]}.")
+            user_dashboard()
         else:
             print("نام کاربری یا رمز عبور اشتباه است.")
 
@@ -49,36 +50,43 @@ def user_menu():
 
 
 
+
+
+
         #user dashborrd
-        from database import get_all_trips, add_reservation, update_reservation, delete_reservation
 
-        # منوی جدید کاربر عادی بعد از ورود موفق
-        def user_dashboard():
-            while True:
-                print("\nمنوی کاربر عادی:")
-                print("1. عملیات رزرو جدید")
-                print("2. ویرایش بلیط")
-                print("3. حذف بلیط")
-                print("4. نمایش همه سفرهای امروز")
-                print("5. خروج")
-                choice = input("لطفاً یکی از گزینه‌ها را انتخاب کنید: ")
 
-                if choice == '1':
-                    input=add_reservation()
-                elif choice == '2':
-                    update_reservation()
-                elif choice == '3':
-                    delete_ticket()
-                elif choice == '4':
-                    trips = get_all_trips()
-                    print("\nسفرهای امروز:")
-                    for trip in trips:
-                        print(f"مبدا: {trip['origin']}, مقصد: {trip['destination']}, تاریخ: {trip['date']}")
-                elif choice == '5':
-                    print("خروج از سیستم...")
-                    break
-                else:
-                    print("انتخاب نامعتبر است. لطفاً دوباره تلاش کنید.")
+#from reservation import add_reservation, get_all_trips, add_reservation, update_reservation, delete_reservation
+
+
+
+# منوی جدید کاربر عادی بعد از ورود موفق
+def user_dashboard():
+    while True:
+        print("\nمنوی کاربر عادی:")
+        print("1. عملیات رزرو جدید")
+        print("2. ویرایش بلیط")
+        print("3. حذف بلیط")
+        print("4. نمایش همه سفرهای امروز")
+        print("5. خروج")
+        choice = input("لطفاً یکی از گزینه‌ها را انتخاب کنید: ")
+
+        # if choice == '1':
+        #     input=add_reservation()
+        # elif choice == '2':
+        #     update_reservation()
+        # elif choice == '3':
+        #     delete_ticket()
+        # elif choice == '4':
+        #     trips = get_all_trips()
+        #     print("\nسفرهای امروز:")
+        #     for trip in trips:
+        #         print(f"مبدا: {trip['origin']}, مقصد: {trip['destination']}, تاریخ: {trip['date']}")
+        # elif choice == '5':
+        #     print("خروج از سیستم...")
+        #     break
+        # else:
+        #     print("انتخاب نامعتبر است. لطفاً دوباره تلاش کنید.")
 
 
 #if __name__ == "__main__":
