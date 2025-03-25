@@ -26,7 +26,7 @@ def user_menu():
         user = login(username, password)
         if user:
             print(f"ورود موفقیت‌آمیز! خوش آمدید, {user[4]} {user[5]}.")
-            user_dashboard()
+            user_dashboard(user)
         else:
             print("نام کاربری یا رمز عبور اشتباه است.")
 
@@ -61,7 +61,7 @@ def user_menu():
 
 
 # منوی جدید کاربر عادی بعد از ورود موفق
-def user_dashboard():
+def user_dashboard(user):
     while True:
         print("\nمنوی کاربر عادی:")
         print("1. عملیات رزرو جدید")
@@ -70,6 +70,7 @@ def user_dashboard():
         print("4. نمایش همه سفرهای امروز")
         print("5. خروج")
         choice = input("لطفاً یکی از گزینه‌ها را انتخاب کنید: ")
+
 
         # if choice == '1':
         #     input=add_reservation()

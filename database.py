@@ -247,6 +247,7 @@ def login(username, password):
     cursor.execute("SELECT * FROM Users WHERE username = ?", (username,))
     user = cursor.fetchone()
     conn.close()
+    #print(user)
 
     # اگر کاربر وجود داشته باشد و پسورد صحیح باشد
     if user and user[2] == password:  # user[2] مربوط به پسورد است
