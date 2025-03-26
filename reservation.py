@@ -1,4 +1,5 @@
 from database import add_reservation
+from database import get_trips_by_destination_and_date
 
 #def new_reservation(user):
 
@@ -32,7 +33,44 @@ def new_reservation(user):
     except ValueError:
         print("تاریخ وارد شده صحیح نیست.")
         return
+    #----------------------------------------
+    def show_trips():
+        # گرفتن مقصد و تاریخ از کاربر
+        destination = input("مقصد سفر را وارد کنید: ")
+        trip_date = input("تاریخ سفر را وارد کنید (فرمت: YYYY-MM-DD): ")
 
+        try:
+            trip_date = datetime.strptime(trip_date, "%Y-%m-%d")
+        except ValueError:
+            print("تاریخ وارد شده صحیح نیست.")
+            return
+
+        # گرفتن سفرها از پایگاه داده با توجه به مقصد و تاریخ
+        trips = get_trips_by_destination_and_date(destination, trip_date)
+
+        if not trips:
+            print("سفری برای این مقصد و تاریخ پیدا نشد.")
+            return
+
+        print("\nلیست سفرهای موجود:")
+        for trip in trips:
+            print(f"آیدی سفر: {trip[0]} - مقصد: {trip[1]} - تاریخ سفر: {trip[2]}")
+
+        # درخواست از کاربر برای انتخاب آیدی سفر
+        trip_id = int(input("\nآیدی سفر مورد نظر خود را وارد کنید: "))
+
+        # بررسی اینکه آیا آیدی وارد شده معتبر است یا خیر
+        if any(trip[0] == trip_id for trip in trips):
+            print(f"شما سفر با آیدی {trip_id} را انتخاب کردید.")
+            return trip_id
+        else:
+            print("آیدی سفر وارد شده صحیح نیست.")
+            return None
+
+
+
+    #-----------------------------
+#-----------کال کن و بگیر یک تایع جدید ایجاد کن
     print("نوع اتوبوس را انتخاب کنید:")
     print("1. عادی (30 صندلی)")
     print("2. VIP (35 صندلی)")
@@ -43,7 +81,7 @@ def new_reservation(user):
     # دریافت صندلی‌های رزرو شده از پایگاه داده
     reserved_seats = get_reserved_seats(destination, trip_date, bus_type)
 
-    display_seat_plan(bus_type)
+    display_seat_plan(bus_type,reserved_seats)
 
     seat_number = int(input("شماره صندلی مورد نظر خود را وارد کنید: "))
     if seat_number in reserved_seats:
@@ -56,7 +94,7 @@ def new_reservation(user):
         f"آیا می‌خواهید بلیط برای سفر به {destination} در تاریخ {trip_date} با شماره صندلی {seat_number} رزرو کنید؟ (بله/خیر): ").lower()
 
     if confirm == 'بله':
-        if add_reservation(user['username'], destination, trip_date, bus_type, seat_number, payment_method):
+        if add_reservation(user[0], destination, trip_date, bus_type, seat_number, payment_method):
             print("رزرو شما با موفقیت انجام شد.")
         else:
             print("خطا در ثبت رزرو.")
