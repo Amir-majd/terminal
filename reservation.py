@@ -34,38 +34,6 @@ def new_reservation(user):
         print("تاریخ وارد شده صحیح نیست.")
         return
     #----------------------------------------
-    def show_trips():
-        # گرفتن مقصد و تاریخ از کاربر
-        destination = input("مقصد سفر را وارد کنید: ")
-        trip_date = input("تاریخ سفر را وارد کنید (فرمت: YYYY-MM-DD): ")
-
-        try:
-            trip_date = datetime.strptime(trip_date, "%Y-%m-%d")
-        except ValueError:
-            print("تاریخ وارد شده صحیح نیست.")
-            return
-
-        # گرفتن سفرها از پایگاه داده با توجه به مقصد و تاریخ
-        trips = get_trips_by_destination_and_date(destination, trip_date)
-
-        if not trips:
-            print("سفری برای این مقصد و تاریخ پیدا نشد.")
-            return
-
-        print("\nلیست سفرهای موجود:")
-        for trip in trips:
-            print(f"آیدی سفر: {trip[0]} - مقصد: {trip[1]} - تاریخ سفر: {trip[2]}")
-
-        # درخواست از کاربر برای انتخاب آیدی سفر
-        trip_id = int(input("\nآیدی سفر مورد نظر خود را وارد کنید: "))
-
-        # بررسی اینکه آیا آیدی وارد شده معتبر است یا خیر
-        if any(trip[0] == trip_id for trip in trips):
-            print(f"شما سفر با آیدی {trip_id} را انتخاب کردید.")
-            return trip_id
-        else:
-            print("آیدی سفر وارد شده صحیح نیست.")
-            return None
 
 
 
@@ -107,4 +75,46 @@ def get_reserved_seats(destination, trip_date, bus_type):
     # این تابع باید اطلاعات صندلی‌های رزرو شده را از پایگاه داده برگرداند.
     # اینجا یک نمونه است که باید با کوئری‌های واقعی جایگزین شود.
     return [1, 2, 3, 5, 6]  # مثال از صندلی‌های رزرو شده
+
+
+
+
+
+def show_trips():
+        # گرفتن مقصد و تاریخ از کاربر
+        destination = input("مقصد سفر را وارد کنید: ")
+        trip_date = input("تاریخ سفر را وارد کنید (فرمت: YYYY-MM-DD): ")
+
+        try:
+            trip_date = datetime.strptime(trip_date, "%Y-%m-%d")
+        except ValueError:
+            print("تاریخ وارد شده صحیح نیست.")
+            return
+
+        # گرفتن سفرها از پایگاه داده با توجه به مقصد و تاریخ
+        trips = get_trips_by_destination_and_date(destination, trip_date)
+
+        if not trips:
+            print("سفری برای این مقصد و تاریخ پیدا نشد.")
+            return
+
+        print("\nلیست سفرهای موجود:")
+        for trip in trips:
+            print(f"آیدی سفر: {trip[0]} - مقصد: {trip[1]} - تاریخ سفر: {trip[2]}")
+
+        # درخواست از کاربر برای انتخاب آیدی سفر
+        trip_id = int(input("\nآیدی سفر مورد نظر خود را وارد کنید: "))
+
+        # بررسی اینکه آیا آیدی وارد شده معتبر است یا خیر
+        if any(trip[0] == trip_id for trip in trips):
+            print(f"شما سفر با آیدی {trip_id} را انتخاب کردید.")
+            return trip_id
+        else:
+            print("آیدی سفر وارد شده صحیح نیست.")
+            return None
+
+
+
+
+
 
