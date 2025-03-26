@@ -254,3 +254,21 @@ def login(username, password):
         return user  # کاربر را بر می‌گرداند
     else:
         return None  # اگر نام کاربری یا پسورد اشتباه باشد
+
+def get_reserved_seats(trip_id):
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT seat_number FROM reservations WHERE trip_id = ? AND status = 'reserved'", (trip_id,))
+    reserved_seats = cursor.fetchall()
+    conn.close()
+    return [seat[0] for seat in reserved_seats]
+
+
+def get_trip_by_date(date):
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM trips WHERE date = ?", (date,))
+    trip = cursor.fetchone()
+    conn.close()
+    return trip
+
