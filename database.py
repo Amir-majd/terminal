@@ -283,7 +283,15 @@ def get_trips_by_destination_and_date(destination, reservation_date):
     conn.close()
     return trips
 
-
+# def get_trips_by_destination_and_date(destination, travel_date):
+#     conn = connect_db()
+#     cursor = conn.cursor()
+#     cursor.execute('''
+#         SELECT * FROM Trips WHERE destination = ? AND departure_date = ?
+#     ''', (destination, travel_date))
+#     trips = cursor.fetchall()
+#     conn.close()
+#     return trips
 
 
 
