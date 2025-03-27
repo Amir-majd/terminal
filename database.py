@@ -121,13 +121,21 @@ def get_all_drivers():
 
 
 # مدیریت رزرو بلیط اقزودن بلیط جدید
-def add_reservation(user_id, trip_id, seat_number, payment_method, reservation_code, notes, modified_by=None):
+def add_reservation(user_id, trip_id, seat_number, payment_method, notes=None, modified_by=None):
     conn = connect_db()
     cursor = conn.cursor()
     cursor.execute('''
-        INSERT INTO Reservations (user_id, trip_id, seat_number, payment_method, reservation_code, notes, modified_by)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-    ''', (user_id, trip_id, seat_number, payment_method, reservation_code, notes, modified_by))
+        INSERT INTO Reservations (
+            user_id, 
+            trip_id, 
+            seat_number, 
+            payment_method, 
+            status,
+            notes, 
+            modified_by
+        )
+        VALUES (?, ?, ?, ?, 'active', ?, ?)
+    ''', (user_id, trip_id, seat_number, payment_method, notes, modified_by))
     conn.commit()
     conn.close()
 
@@ -258,7 +266,7 @@ def login(username, password):
 def get_reserved_seats(trip_id):
     conn = connect_db()
     cursor = conn.cursor()
-    cursor.execute("SELECT seat_number FROM reservations WHERE trip_id = ? AND status = 'reserved'", (trip_id,))
+    cursor.execute("SELECT seat_number FROM reservations WHERE trip_id = ?", (trip_id,))
     reserved_seats = cursor.fetchall()
     conn.close()
     return [seat[0] for seat in reserved_seats]
@@ -277,7 +285,10 @@ def get_trips_by_destination_and_date(destination, reservation_date):
     conn = connect_db()
     cursor = conn.cursor()
     cursor.execute('''
-        SELECT * FROM Trips WHERE destination = ? AND departure_date = ?
+        SELECT t.*, b.model as bus_type 
+FROM Trips t
+JOIN Buses b ON t.bus_id = b.bus_id
+WHERE t.destination = ? AND t.departure_date = ?
     ''', (destination, reservation_date))
     trips = cursor.fetchall()
     conn.close()
