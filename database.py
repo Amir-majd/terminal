@@ -309,7 +309,20 @@ def get_user_reservations(user_id):
     try:
         conn = connect_db()
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM reservations WHERE user_id = ?", (user_id,))
+        cursor.execute('''
+            SELECT 
+                r.ticket_id,
+                t.destination,
+                t.departure_date,
+                b.model as bus_type,
+                r.seat_number,
+                r.status,
+                r.payment_method
+            FROM Reservations r
+            JOIN Trips t ON r.trip_id = t.trip_id
+            JOIN Buses b ON t.bus_id = b.bus_id
+            WHERE r.user_id = ?
+        ''', (user_id,))
         reservations = cursor.fetchall()
         conn.close()
         return reservations
@@ -317,11 +330,11 @@ def get_user_reservations(user_id):
         print("خطا در دریافت رزروها:", str(e))
         return []
 
-def delete_reservation1(reservation_id):
+def delete_reservation1(ticket_id):
     try:
         conn = connect_db()
         cursor = conn.cursor()
-        cursor.execute("DELETE FROM reservations WHERE trip_id = ?", (reservation_id,))
+        cursor.execute("DELETE FROM reservations WHERE ticket_id = ?", (ticket_id,))
         conn.commit()
         conn.close()
     except Exception as e:

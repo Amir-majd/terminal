@@ -102,7 +102,7 @@ from database import delete_reservation1
 
 def delete_ticket(user):
     # گرفتن تمام رزروهای کاربر از پایگاه داده
-    reservations = get_user_reservations(user[-1])  # فرض بر این است که user[0] شناسه کاربر است
+    reservations = get_user_reservations(user[0])  # فرض بر این است که user[0] شناسه کاربر است
 
     if not reservations:
         print("شما هیچ بلیطی رزرو نکرده‌اید.")
@@ -111,7 +111,7 @@ def delete_ticket(user):
     print("\nلیست بلیط‌های شما:")
     for reservation in reservations:
         print(
-            f"آیدی رزرو: {reservation[4]} - مقصد: {reservation[2]} - تاریخ سفر: {reservation[3]} - نوع اتوبوس: {reservation[3]} - شماره صندلی: {reservation[3]}")
+            f"آیدی رزرو: {reservation[0]} - مقصد: {reservation[1]} - تاریخ سفر: {reservation[2]} - نوع اتوبوس: {reservation[3]} - شماره صندلی: {reservation[4]}")
 
     # انتخاب بلیط برای حذف
     reservation_id = input("\nآیدی بلیطی که می‌خواهید حذف کنید را وارد کنید: ")
