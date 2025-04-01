@@ -45,7 +45,7 @@ def new_reservation(user):
         # bus_choice = input("انتخاب شما (1/2): ")
         #
         # bus_type = "normal" if bus_choice == '1' else "VIP"
-        #bus_type=
+        #bus_type=reservation.py
         # دریافت صندلی‌های رزرو شده از پایگاه داده
         reserved_seats = get_reserved_seats(trip[0])
         
@@ -94,6 +94,39 @@ def show_trips(destination, trip_date):
         else:
             print("آیدی سفر وارد شده صحیح نیست.")
             return None
+
+#new code for deleting ticket sobi from here ______________________________
+from database import  get_user_reservations
+from database import delete_reservation1
+
+
+def delete_ticket(user):
+    # گرفتن تمام رزروهای کاربر از پایگاه داده
+    reservations = get_user_reservations(user[-1])  # فرض بر این است که user[0] شناسه کاربر است
+
+    if not reservations:
+        print("شما هیچ بلیطی رزرو نکرده‌اید.")
+        return
+
+    print("\nلیست بلیط‌های شما:")
+    for reservation in reservations:
+        print(
+            f"آیدی رزرو: {reservation[4]} - مقصد: {reservation[2]} - تاریخ سفر: {reservation[3]} - نوع اتوبوس: {reservation[3]} - شماره صندلی: {reservation[3]}")
+
+    # انتخاب بلیط برای حذف
+    reservation_id = input("\nآیدی بلیطی که می‌خواهید حذف کنید را وارد کنید: ")
+
+    # بررسی اینکه آیا آیدی وارد شده معتبر است یا خیر
+    if any(reservation[0] == int(reservation_id) for reservation in reservations):
+        # حذف بلیط از پایگاه داده
+        try:
+            delete_reservation1(reservation_id)
+            print("بلیط با موفقیت حذف شد.")
+        except Exception as e:
+            print("خطا در حذف بلیط.", str(e))
+    else:
+        print("آیدی بلیط وارد شده معتبر نیست.")
+
 
 
 

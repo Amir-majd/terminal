@@ -176,12 +176,12 @@ def update_reservation(ticket_id, seat_number, payment_method, notes, modified_b
 
 # حذف رزرو بلیط
 
-def delete_reservation(ticket_id):
-    conn = connect_db()
-    cursor = conn.cursor()
-    cursor.execute('DELETE FROM Reservations WHERE ticket_id = ?', (ticket_id,))
-    conn.commit()
-    conn.close()
+# def delete_reservation(ticket_id):
+#     conn = connect_db()
+#     cursor = conn.cursor()
+#     cursor.execute('DELETE FROM Reservations WHERE ticket_id = ?', (ticket_id,))
+#     conn.commit()
+#     conn.close()
 
 
 7.  # مدیریت# تراکنش‌ها (Transactions)
@@ -303,6 +303,32 @@ WHERE t.destination = ? AND t.departure_date = ?
 #     trips = cursor.fetchall()
 #     conn.close()
 #     return trips
+
+#new queries __________________________
+def get_user_reservations(user_id):
+    try:
+        conn = connect_db()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM reservations WHERE user_id = ?", (user_id,))
+        reservations = cursor.fetchall()
+        conn.close()
+        return reservations
+    except Exception as e:
+        print("خطا در دریافت رزروها:", str(e))
+        return []
+
+def delete_reservation1(reservation_id):
+    try:
+        conn = connect_db()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM reservations WHERE trip_id = ?", (reservation_id,))
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        print("خطا در حذف رزرو:", str(e))
+
+
+
 
 
 

@@ -56,7 +56,7 @@ def user_menu():
         #user dashborrd
 
 
-from reservation import add_reservation, add_reservation, new_reservation
+from reservation import add_reservation, add_reservation, new_reservation,delete_ticket
 
 
 #from reservation import update get all trips and delete trips
@@ -76,10 +76,10 @@ def user_dashboard(user):
 
         if choice == '1':
              new_reservation(user)
-         #elif choice == '2':
-          #   update_reservation()
-         #elif choice == '3':
-          #   delete_ticket()
+       # elif choice == '2':
+             #update
+        elif choice == '3':
+            delete_ticket(user)
         elif choice == '4':
            #  trips = get_all_trips()
              print("\nسفرهای امروز:")
