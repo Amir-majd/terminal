@@ -80,16 +80,15 @@ def user_dashboard(user):
              edit_reservation(user)
         elif choice == '3':
             delete_ticket(user)
-        elif choice == '4':
-           #  trips = get_all_trips()
-             print("\nسفرهای امروز:")
-             #for trip in trips:
-              #   print(f"مبدا: {trip['origin']}, مقصد: {trip['destination']}, تاریخ: {trip['date']}")
+
         elif choice == '5':
-           #  print("خروج از سیستم...")
-                break
+            print("خروج از منوی رزرو کاربر")
+            break
+
         else:
-            print("انتخاب نامعتبر است. لطفاً دوباره تلاش کنید.")
+            print("گزینه نامعتبر است")
+
+
 
 
 #if __name__ == "__main__":
