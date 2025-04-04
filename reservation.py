@@ -127,8 +127,81 @@ def delete_ticket(user):
     else:
         print("آیدی بلیط وارد شده معتبر نیست.")
 
+#edit ticket*************
+
+from database import get_reservation_by_trip_id, update_seat_in_reservation, get_reserved_seats, get_trip_by_id  #display_seat_plan
 
 
+def edit_reservation(user):
+    # دریافت آیدی سفر از کاربر
+    trip_id = int(input("آیدی سفر خود را وارد کنید: "))
+
+    # دریافت سفر از پایگاه داده با آیدی سفر
+    trip = get_trip_by_id(trip_id)
+
+    if not trip:
+        print("سفری با این آیدی پیدا نشد.")
+        return
+
+    # نمایش اطلاعات سفر به کاربر
+    print(f"شما سفر به {trip[2]}، تاریخ سفر: {trip[3]} را انتخاب کرده‌اید.")
+
+    # گرفتن رزروهای مربوط به این سفر از پایگاه داده
+    reservations = get_reservation_by_trip_id(trip_id)
+
+    if not reservations:
+        print("هیچ رزروی برای این سفر وجود ندارد.")
+        return
+
+    # نمایش لیست رزروهای کاربر
+    print("\nرزروهای شما برای این سفر:")
+    for reservation in reservations:
+        if reservation[1] == user[0]:  # فقط رزروهای متعلق به کاربر فعلی را نمایش می‌دهیم
+            print(f"آیدی رزرو: {reservation[0]} - شماره صندلی: {reservation[6]}")
+
+    # دریافت آیدی رزرو از کاربر
+    reservation_id = int(input("آیدی رزرو خود را وارد کنید: "))
+
+    # پیدا کردن رزرو مربوطه
+    reservation = next((r for r in reservations if r[0] == reservation_id), None)
+
+    if not reservation:
+        print("رزوری با این آیدی برای شما یافت نشد.")
+        return
+
+    if reservation[5] == 'cancelled':  # بررسی وضعیت رزرو
+        print("این رزرو قبلاً لغو شده است.")
+        return
+
+    print(f"رزرو فعلی شما: شماره صندلی {reservation[6]}")
+
+    # دریافت صندلی‌های رزرو شده از پایگاه داده
+    reserved_seats = get_reserved_seats(trip_id)
+
+    # نمایش چیدمان صندلی‌ها
+    bus_type = trip[-1]  # نوع اتوبوس از اطلاعات سفر
+    display_seat_plan(bus_type, reserved_seats)
+
+    # دریافت شماره صندلی جدید از کاربر
+    new_seat_number = int(input("شماره صندلی جدید خود را وارد کنید: "))
+
+    if new_seat_number in reserved_seats:
+        print("این صندلی قبلاً رزرو شده است. لطفاً شماره دیگری وارد کنید.")
+        return
+
+    # تایید نهایی از کاربر
+    confirm = input(
+        f"آیا می‌خواهید شماره صندلی خود را از {reservation[6]} به {new_seat_number} تغییر دهید؟ (بله/خیر): ").lower()
+
+    if confirm == 'بله':
+        try:
+            # بروزرسانی شماره صندلی در پایگاه داده
+            update_seat_in_reservation(reservation[0], new_seat_number)
+            print("تغییرات با موفقیت اعمال شد.")
+        except Exception as e:
+            print(f"خطا در ویرایش رزرو: {str(e)}")
+    else:
+        print("ویرایش رزرو لغو شد.")
 
 
 

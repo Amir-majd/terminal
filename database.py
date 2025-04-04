@@ -342,6 +342,45 @@ def delete_reservation1(ticket_id):
 
 
 
+#new queries from here******************
+
+
+def get_reservation_by_trip_id(trip_id):
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM reservations WHERE trip_id=?", (trip_id,))
+    reservations = cursor.fetchall()
+    conn.close()
+    return reservations
+
+# دریافت اطلاعات سفر بر اساس آیدی سفر
+def get_trip_by_id(trip_id):
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM trips WHERE trip_id=?", (trip_id,))
+    trip = cursor.fetchone()
+    conn.close()
+    return trip
+
+# دریافت صندلی‌های رزرو شده برای یک سفر
+def get_reserved_seats(trip_id):
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT seat_number FROM reservations WHERE trip_id=?", (trip_id,))
+    reserved_seats = [row[0] for row in cursor.fetchall()]
+    conn.close()
+    return reserved_seats
+
+# بروزرسانی شماره صندلی در رزرو
+def update_seat_in_reservation(trip_id, new_seat_number):
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE reservations SET seat_number=? WHERE trip_id=?", (new_seat_number, trip_id))
+    conn.commit()
+    conn.close()
+
+
+
 
 
 
