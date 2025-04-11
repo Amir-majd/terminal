@@ -17,6 +17,7 @@ def user_menu():
         user = login(username, password)
         if user:
             print("ورود موفقیت‌آمیز! خوش آمدید, مدیر.")
+            admin_menu()
         else:
             print("نام کاربری یا رمز عبور اشتباه است.")
 
@@ -88,6 +89,129 @@ def user_dashboard(user):
         else:
             print("گزینه نامعتبر است")
 
+from database import login
+# from transaction import get_income  # فرض می‌کنیم این تابع میزان درآمد رو می‌گیره
+# from travel import get_trips_today, get_all_trips, add_trip  # فرضی برای گرفتن سفرهای امروز و افزودن سفر
+# from driver_bus import get_drivers, get_buses, add_driver  # فرضی برای گرفتن اطلاعات رانندگان و اتوبوس‌ها
+# from report import generate_reports  # فرضی برای گزارش‌گیری
+
+
+def admin_menu():
+    while True:
+        print("\nمنوی مدیریت:")
+        print("1. تراکنش‌ها")
+        print("2. اطلاعات سفرها")
+        print("3. اطلاعات رانندگان و اتوبوس‌ها")
+        print("4. گزارش‌گیری")
+        print("5. خروج")
+
+        choice = input("لطفاً یکی از گزینه‌ها را انتخاب کنید: ")
+
+        if choice == '1':
+            transaction_menu()
+
+        elif choice == '2':
+            travel_menu()
+
+        elif choice == '3':
+            driver_bus_menu()
+
+        elif choice == '4':
+            pass
+            #generate_reports()
+
+        elif choice == '5':
+            print("خروج از منوی مدیریت")
+            break
+
+        else:
+            print("گزینه نامعتبر است. لطفاً دوباره تلاش کنید.")
+
+
+# منوی تراکنش‌ها
+def transaction_menu():
+    print("\nمنوی تراکنش‌ها:")
+    print("1. میزان درآمد")
+    print("2. بازگشت به منوی اصلی")
+    choice = input("لطفاً یکی از گزینه‌ها را انتخاب کنید: ")
+
+    if choice == '1':
+        pass
+        #income = get_income()
+        #print(f"میزان درآمد: {income} تومان")
+    elif choice == '2':
+        pass
+
+    else:
+        print("گزینه نامعتبر است.")
+
+
+
+# منوی اطلاعات سفرها
+def travel_menu():
+    while True:
+        print("\nمنوی اطلاعات سفرها:")
+        print("1. سفرهای انجام شده")
+        print("2. لیست کامل سفرهای امروز")
+        print("3. افزودن سفر")
+        print("4. بازگشت به منوی اصلی")
+
+        choice = input("لطفاً یکی از گزینه‌ها را انتخاب کنید: ")
+
+        if choice == '1':
+            pass
+            #trips = get_all_trips()
+
+            #for trip in trips:
+                #print(trip)
+
+        elif choice == '2':
+            pass
+            #trips_today = get_trips_today()
+            #for trip in trips_today:
+                #print(trip)
+
+        elif choice == '3':
+            pass
+            #add_trip()
+
+        elif choice == '4':
+            break
+        else:
+            print("گزینه نامعتبر است.")
+
+
+# منوی اطلاعات رانندگان و اتوبوس‌ها
+def driver_bus_menu():
+    while True:
+        print("\nمنوی اطلاعات رانندگان و اتوبوس‌ها:")
+        print("1. اطلاعات رانندگان")
+        print("2. اطلاعات اتوبوس‌ها")
+        print("3. افزودن راننده جدید")
+        print("4. بازگشت به منوی اصلی")
+
+        choice = input("لطفاً یکی از گزینه‌ها را انتخاب کنید: ")
+
+        if choice == '1':
+            pass
+            # drivers = get_drivers()
+            # for driver in drivers:
+            #     print(driver)
+
+        elif choice == '2':
+            pass
+            # buses = get_buses()
+            # for bus in buses:
+            #     print(bus)
+
+        elif choice == '3':
+            pass
+            #add_driver()
+
+        elif choice == '4':
+            break
+        else:
+            print("گزینه نامعتبر است.")
 
 
 
