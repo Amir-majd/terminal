@@ -95,7 +95,7 @@ def show_trips(destination, trip_date):
             print("آیدی سفر وارد شده صحیح نیست.")
             return None
 
-#new code for deleting ticket sobi from here ______________________________
+
 from database import  get_user_reservations
 from database import delete_reservation1
 
