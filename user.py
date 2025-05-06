@@ -146,7 +146,7 @@ def transaction_menu():
         print("گزینه نامعتبر است.")
 
 
-
+from reservation import show_trips_by_date
 # منوی اطلاعات سفرها
 def travel_menu():
     while True:
@@ -166,10 +166,10 @@ def travel_menu():
                 #print(trip)
 
         elif choice == '2':
-            pass
-            #trips_today = get_trips_today()
-            #for trip in trips_today:
-                #print(trip)
+            #show_trips_by_date()
+            trips_today = show_trips_by_date()
+            for trip in trips_today:
+                print(trip)
 
         elif choice == '3':
             pass

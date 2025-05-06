@@ -378,6 +378,18 @@ def update_seat_in_reservation(trip_id, new_seat_number):
     cursor.execute("UPDATE reservations SET seat_number=? WHERE trip_id=?", (new_seat_number, trip_id))
     conn.commit()
     conn.close()
+#-----------new queries for admin menu--------
+#لیست سفر های امروز
+def get_trips_by_date(departure_date):
+    conn = connect_db()
+    #conn = sqlite3.connect("your_database_name.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM Trips WHERE departure_date = ?", (departure_date,))
+    trips = cursor.fetchall()
+    conn.close()
+    return trips
+
+
 
 
 

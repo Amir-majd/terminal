@@ -204,5 +204,30 @@ def edit_reservation(user):
         print("ویرایش رزرو لغو شد.")
 
 
+#--------new functions for admin menu------
+
+from database import get_trips_by_date
+#تایع لیست سفر های امروز
+def show_trips_by_date():
+    while True:  # حلقه برای انجام عملیات مکرر
+        date = input("تاریخ مورد نظر را وارد کنید (yyyy-mm-dd): ")
+
+        trips = get_trips_by_date(date)
+
+        if not trips:
+            print("هیچ سفری در این تاریخ ثبت نشده است.")
+            continue
+
+        print(f"\nلیست سفرهای ثبت شده در تاریخ {date}:\n")
+        for trip in trips:
+            trip_id, bus_id, driver_id, origin, destination, departure_date, departure_time, is_canceled = trip
+            status = "لغو شده" if is_canceled else "فعال"
+            print(f"شماره سفر: {trip_id} | از: {origin} به: {destination} | تاریخ: {departure_date} | ساعت: {departure_time} | وضعیت: {status}")
+
+        user_choice = input("\nبرای بازگشت به منو مدیریت عدد 0 را وارد کنید یا هر عدد دیگری را برای مشاهده دوباره سفرها وارد کنید: ")
+
+        if user_choice == '0':
+            break  # برگرداندن به منو مدیریت
+
 
 
