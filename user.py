@@ -127,7 +127,7 @@ def admin_menu():
         else:
             print("گزینه نامعتبر است. لطفاً دوباره تلاش کنید.")
 
-
+from reservation import show_revenue_by_date
 # منوی تراکنش‌ها
 def transaction_menu():
     print("\nمنوی تراکنش‌ها:")
@@ -136,7 +136,7 @@ def transaction_menu():
     choice = input("لطفاً یکی از گزینه‌ها را انتخاب کنید: ")
 
     if choice == '1':
-        pass
+        show_revenue_by_date()
         #income = get_income()
         #print(f"میزان درآمد: {income} تومان")
     elif choice == '2':
@@ -144,8 +144,8 @@ def transaction_menu():
 
     else:
         print("گزینه نامعتبر است.")
-
-
+from reservation import show_completed_trips
+from reservation import add_trip
 from reservation import show_trips_by_date
 # منوی اطلاعات سفرها
 def travel_menu():
@@ -159,7 +159,7 @@ def travel_menu():
         choice = input("لطفاً یکی از گزینه‌ها را انتخاب کنید: ")
 
         if choice == '1':
-            pass
+            show_completed_trips()
             #trips = get_all_trips()
 
             #for trip in trips:
@@ -172,15 +172,16 @@ def travel_menu():
                 print(trip)
 
         elif choice == '3':
-            pass
+            add_trip()
             #add_trip()
 
         elif choice == '4':
             break
         else:
             print("گزینه نامعتبر است.")
-
-
+from reservation import show_all_buses
+from reservation import get_all_drivers
+from  reservation import add_new_driver
 # منوی اطلاعات رانندگان و اتوبوس‌ها
 def driver_bus_menu():
     while True:
@@ -193,19 +194,19 @@ def driver_bus_menu():
         choice = input("لطفاً یکی از گزینه‌ها را انتخاب کنید: ")
 
         if choice == '1':
-            pass
-            # drivers = get_drivers()
-            # for driver in drivers:
-            #     print(driver)
+            #get_all_drivers()
+             drivers = get_all_drivers()
+             for driver in drivers:
+                 print(driver)
 
         elif choice == '2':
-            pass
+            show_all_buses()
             # buses = get_buses()
             # for bus in buses:
             #     print(bus)
 
         elif choice == '3':
-            pass
+            add_new_driver()
             #add_driver()
 
         elif choice == '4':

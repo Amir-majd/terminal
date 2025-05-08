@@ -388,10 +388,64 @@ def get_trips_by_date(departure_date):
     trips = cursor.fetchall()
     conn.close()
     return trips
+#-----افزودن سفر جدید====
 
+def add_new_trip(departure_date, destination, bus_type):
+    try:
+        # فرض بر این است که در جدول Trips فیلدهای departure_date، destination و bus_type وجود دارند.
+        query = """
+        INSERT INTO Trips (departure_date, destination, bus_type)
+        VALUES (?, ?, ?)
+        """
+        params = (departure_date, destination, bus_type)
+        conn=connect_db()
+        cursor.execute(query, params)
+        connection.commit()  # ذخیره تغییرات در پایگاه داده
+        print("سفر جدید با موفقیت اضافه شد.")
+    except Exception as e:
+        print(f"خطا در افزودن سفر جدید: {e}")
 
+#------شفر هایی که انجام شده است ---
+def get_completed_trips():
+    query = "SELECT * FROM Trips WHERE departure_date < DATE('now');"
+    return (query)
 
+#اتوبوس و رانندگان
+def get_all_drivers():
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM Drivers')
+    drivers = cursor.fetchall()
+    conn.close()
+    return drivers
 
+#تمام اتوبوس ها
+def get_all_buses():
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM Buses')
+    buses = cursor.fetchall()
+    conn.close()
+    return buses
+
+#افزودن راننده
+def add_driver(name, license_number, birth_date, address, hiring_date, experience_years):
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute('''        INSERT INTO Drivers (name, license_number, birth_date, address, hiring_date, experience_years)
+            VALUES (?, ?, ?, ?, ?, ?)    ''', (name, license_number, birth_date, address, hiring_date, experience_years))
+    conn.commit()
+    conn.close()
+
+def get_income_by_date(date):
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT SUM(amount) FROM Transactions WHERE transaction_date = ?
+    ''', (date,))
+    income = cursor.fetchone()[0]  # دریافت اولین (و تنها) مقدار از نتیجه
+    conn.close()
+    return income if income else 0  # اگر نتیجه None بود، 0 برگردانده می‌شود
 
 
 

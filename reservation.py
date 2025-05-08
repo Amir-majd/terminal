@@ -1,4 +1,4 @@
-from database import add_reservation
+from database import add_reservation, add_driver
 from database import get_trips_by_destination_and_date
 
 #def new_reservation(user):
@@ -229,5 +229,100 @@ def show_trips_by_date():
         if user_choice == '0':
             break  # برگرداندن به منو مدیریت
 
+from database import add_new_trip
+def add_trip():
+    print("لطفاً اطلاعات سفر جدید را وارد کنید:")
+
+    # گرفتن تاریخ سفر از کاربر
+    departure_date = input("تاریخ سفر (فرمت YYYY-MM-DD): ")
+
+    # گرفتن مقصد از کاربر
+    destination = input("مقصد سفر: ")
+
+    # گرفتن نوع اتوبوس از کاربر
+    bus_type = input("نوع اتوبوس (عادی/وی‌آی‌پی): ")
+
+    # فراخوانی تابع افزودن سفر جدید
+    add_new_trip(departure_date, destination, bus_type)
 
 
+#----سفر هایی که انجام شدن---
+from database import get_completed_trips  # فراخوانی تابع دریافت سفرهای انجام شده از database.py
+
+
+def show_completed_trips():
+    print("سفرهای انجام شده:")
+
+    # دریافت سفرهای انجام شده
+    trips = get_completed_trips()
+
+    # اگر سفرهای انجام شده وجود داشته باشد
+    if trips:
+        for trip in trips:
+            print(f"ID سفر: {trip[0]}, تاریخ: {trip[1]}, مقصد: {trip[2]}, نوع اتوبوس: {trip[3]}")
+    else:
+        print("هیچ سفری انجام نشده است.")
+
+
+#دریافت اطلاعات راننده
+from database import get_all_drivers
+
+def show_all_drivers():
+    drivers = get_all_drivers()
+    if not drivers:
+        print("هیچ راننده‌ای در سیستم ثبت نشده است.")
+        return
+
+    print("\nلیست رانندگان:")
+    print("-" * 40)
+    for driver in drivers:
+        driver_id, name, phone, license_number = driver  # فرض بر اینکه این فیلدها وجود دارند
+        print(f"شناسه: {driver_id}")
+        print(f"نام: {name}")
+        print(f"شماره تماس: {phone}")
+        print(f"شماره گواهینامه: {license_number}")
+        print("-" * 40)
+
+    input("برای بازگشت به منو، یک کلید فشار دهید...")
+
+#نمایش اتوبوس ها
+from database import get_all_buses
+
+def show_all_buses():
+    buses = get_all_buses()
+    if not buses:
+        print("هیچ اتوبوسی ثبت نشده است.")
+    else:
+        print("\nلیست اتوبوس‌ها:\n")
+        for bus in buses:
+            print(f"ID: {bus[0]}, شماره پلاک: {bus[1]}, ظرفیت: {bus[2]}, نوع: {bus[3]}")
+    print()
+
+
+def add_new_driver():
+    print("لطفاً اطلاعات راننده جدید را وارد کنید:")
+
+    # گرفتن اطلاعات از کاربر
+    name = input("نام راننده: ")
+    license_number = input("شماره گواهینامه: ")
+    birth_date = input("تاریخ تولد (yyyy-mm-dd): ")
+    address = input("آدرس: ")
+    hiring_date = input("تاریخ استخدام (yyyy-mm-dd): ")
+    experience_years = input("تعداد سال‌های تجربه: ")
+
+    # فراخوانی تابع برای اضافه کردن راننده
+    add_driver(name, license_number, birth_date, address, hiring_date, experience_years)
+    print("راننده جدید با موفقیت اضافه شد.")
+
+
+from database import get_income_by_date
+
+
+def show_revenue_by_date():
+    date = input("لطفا تاریخ مورد نظر را وارد کنید (فرمت: YYYY-MM-DD): ")
+    revenue = get_income_by_date(date)
+
+    if revenue is not None:
+        print(f"میزان درآمد در تاریخ {date}: {revenue} تومان")
+    else:
+        print(f"هیچ تراکنشی در تاریخ {date} یافت نشد.")
