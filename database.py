@@ -380,14 +380,43 @@ def update_seat_in_reservation(trip_id, new_seat_number):
     conn.close()
 #-----------new queries for admin menu--------
 #لیست سفر های امروز
-def get_trips_by_date(departure_date):
+# def get_trips_by_date(departure_date):
+#     conn = connect_db()
+#     #conn = sqlite3.connect("your_database_name.db")
+#     cursor = conn.cursor()
+#     cursor.execute("SELECT * FROM Trips WHERE departure_date = ?", (departure_date,))
+#     trips = cursor.fetchall()
+#     conn.close()
+#     return trips
+#----
+# def get_trips_by_date1(departure_date):
+#     conn = connect_db()
+#     cursor = conn.cursor()
+#     query = """
+#         SELECT trip_id, bus_id, driver_id, destination, departure_date, status AS is_canceled
+#         FROM Trips
+#         WHERE departure_date = ?
+#     """
+#     cursor.execute(query, (departure_date,))
+#     trips = cursor.fetchall()
+#     conn.close()
+#     return trips
+
+def get_trips_by_date1(departure_date):
     conn = connect_db()
-    #conn = sqlite3.connect("your_database_name.db")
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM Trips WHERE departure_date = ?", (departure_date,))
+    query = """
+        SELECT trip_id, bus_id, driver_id, departure AS origin, destination, departure_date, status AS is_canceled
+        FROM Trips
+        WHERE departure_date = ?
+    """
+    cursor.execute(query, (departure_date,))
     trips = cursor.fetchall()
     conn.close()
     return trips
+
+#---
+
 #-----افزودن سفر جدید====
 
 def add_new_trip(departure_date, destination, bus_type):
@@ -409,7 +438,18 @@ def add_new_trip(departure_date, destination, bus_type):
 def get_completed_trips():
     query = "SELECT * FROM Trips WHERE departure_date < DATE('now');"
     return (query)
+#---
+def get_completed_trips1():
+    conn = connect_db()
+    #conn = sqlite3.connect('your_database.db')  # آدرس دیتابیس درست باشه
+    cursor = conn.cursor()
+    query = "SELECT * FROM Trips WHERE departure_date < DATE('now');"
+    cursor.execute(query)
+    trips = cursor.fetchall()
+    conn.close()
+    return trips
 
+#----
 #اتوبوس و رانندگان
 def get_all_drivers():
     conn = connect_db()

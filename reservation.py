@@ -206,13 +206,13 @@ def edit_reservation(user):
 
 #--------new functions for admin menu------
 
-from database import get_trips_by_date
+from database import get_trips_by_date1
 #تایع لیست سفر های امروز
 def show_trips_by_date():
-    while True:  # حلقه برای انجام عملیات مکرر
+    while True:
         date = input("تاریخ مورد نظر را وارد کنید (yyyy-mm-dd): ")
 
-        trips = get_trips_by_date(date)
+        trips = get_trips_by_date1(date)
 
         if not trips:
             print("هیچ سفری در این تاریخ ثبت نشده است.")
@@ -220,15 +220,15 @@ def show_trips_by_date():
 
         print(f"\nلیست سفرهای ثبت شده در تاریخ {date}:\n")
         for trip in trips:
-            trip_id, bus_id, driver_id, origin, destination, departure_date, departure_time, is_canceled = trip
-            status = "لغو شده" if is_canceled else "فعال"
-            print(f"شماره سفر: {trip_id} | از: {origin} به: {destination} | تاریخ: {departure_date} | ساعت: {departure_time} | وضعیت: {status}")
+            trip_id, bus_id, driver_id, origin, destination, departure_date, is_canceled = trip
+            status = "لغو شده" if is_canceled == "غیرفعال" else "فعال"
+            print(f"شماره سفر: {trip_id} | از: {origin} به: {destination} | تاریخ: {departure_date} | وضعیت: {status}")
 
-        user_choice = input("\nبرای بازگشت به منو مدیریت عدد 0 را وارد کنید یا هر عدد دیگری را برای مشاهده دوباره سفرها وارد کنید: ")
-
+        user_choice = input(
+            "\nبرای بازگشت به منو مدیریت عدد 0 را وارد کنید یا هر عدد دیگری را برای مشاهده دوباره سفرها وارد کنید: ")
         if user_choice == '0':
-            break  # برگرداندن به منو مدیریت
-
+            break
+#-----------
 from database import add_new_trip
 def add_trip():
     print("لطفاً اطلاعات سفر جدید را وارد کنید:")
@@ -247,14 +247,14 @@ def add_trip():
 
 
 #----سفر هایی که انجام شدن---
-from database import get_completed_trips  # فراخوانی تابع دریافت سفرهای انجام شده از database.py
+from database import get_completed_trips1  # فراخوانی تابع دریافت سفرهای انجام شده از database.py
 
 
 def show_completed_trips():
     print("سفرهای انجام شده:")
 
     # دریافت سفرهای انجام شده
-    trips = get_completed_trips()
+    trips = get_completed_trips1()
 
     # اگر سفرهای انجام شده وجود داشته باشد
     if trips:
